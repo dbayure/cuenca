@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/defaultLogin.xhtml">
+	<ui:define name="content">
+		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false" >
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+			<h:panelGrid  style="margin-left:300px">
+					<p:row>
+						<p:column ><label for="j_username"  >Usuario: *</label></p:column>
+						<br />
+						<p:column style="text-align: right"><input id="j_username" name="j_username" required="required" class="ui-inputfield ui-inputtext" ></input></p:column>
+					</p:row>
+					<p:row>
+						<p:column width="15"><label for="j_password"  >Contraseña: *</label></p:column>
+						<br />
+						<p:column style="text-align: right"><input id="j_password" type="password" name="j_password" required="required"  class="ui-inputfield ui-inputtext"></input></p:column>
+					</p:row>
+					<p:row >
+					<p:column></p:column>
+					<p:column >
+						<p:commandButton style="margin-left:137px" id="submit" value="Login" ajax="false" />
+					</p:column>
+					</p:row>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

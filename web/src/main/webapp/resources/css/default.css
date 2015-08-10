@@ -1,0 +1,9 @@
+.ui-widget {
+    font-size: 100%;
+ }
+.ui-widget .ui-widget {
+    font-size: 85%;
+ }
+.uy-datatable * {
+	border: 0px !important;
+}
