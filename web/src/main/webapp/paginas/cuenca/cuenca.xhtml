@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1 style="text-align: center;">Mediciones de la Cuenca</h1>
+
+
+		<h:form id="form" prependId="false">
+		<p:dataTable id="valores" var="_temp" value="#{temparturas}" editable="true"
+		rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+       		<f:facet name="header">  
+            	Lecturas obtenidas
+        	</f:facet>
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_temp.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Celsius" style="width:10%">
+        	 	<h:outputText value="#{_temp.celcius}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Disoxi" style="width:10%">
+        	 	<h:outputText value="#{_temp.disoxi}" />
+        	 </p:column>        	         	 
+	        
+	         <p:column headerText="Evento" style="width:35%">
+        	 	<h:outputText value="#{_temp.fevento}" />
+        	 </p:column>
+	        
+	         <p:column headerText="Humedad" style="width:10%">
+        	 	<h:outputText value="#{_temp.humedad}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="PH" style="width:5%">
+        	 	<h:outputText value="#{_temp.ph}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Sensor" style="width:10%">
+        	 	<h:outputText value="#{_temp.sensor}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Fecha" style="width:35%">
+        	 	<h:outputText value="#{_temp.sfecha}" />
+        	 </p:column>
+	        
+	         <p:column headerText="Voltaje" style="width:10%">
+        	 	<h:outputText value="#{_temp.voltajebateria}" />
+        	 </p:column>
+        	 
+        </p:dataTable>       
+		</h:form>
+	</ui:define>
+</ui:composition>

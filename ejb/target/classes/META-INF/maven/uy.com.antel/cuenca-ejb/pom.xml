@@ -101,6 +101,12 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.picketbox</groupId>
+			<artifactId>picketbox</artifactId>
+			<version>4.0.5.Final</version>
+			<type>pom</type>
+		</dependency>
 	</dependencies>
 
 	<build>

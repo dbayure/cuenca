@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
- 	<context-param>
-	    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
-	    <param-value>true</param-value>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>Cuenca-web</display-name>
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
 	</context-param>
-	
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>bootstrap</param-value>
 	</context-param>
-	
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
-	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 	<security-constraint>
 		<display-name>Autenticacion Cuenca</display-name>
 		<web-resource-collection>
@@ -23,16 +46,14 @@
 			<url-pattern>/login/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-            <description/>
-            <role-name>ADMIN</role-name>
-            <role-name>CONSULTA</role-name>
-            <role-name>INGRESO</role-name>
-        </auth-constraint>  
-        <user-data-constraint>
-        	<transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
+			<role-name>ADMIN</role-name>
+			<role-name>CONSULTA</role-name>
+			<role-name>BASICO</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
 	</security-constraint>
-	
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
@@ -40,22 +61,13 @@
 			<form-error-page>/login/error.jsf</form-error-page>
 		</form-login-config>
 	</login-config>
-	
 	<security-role>
 		<role-name>ADMIN</role-name>
 	</security-role>
-		<security-role>
+	<security-role>
 		<role-name>CONSULTA</role-name>
 	</security-role>
-		<security-role>
-		<role-name>INGRESO</role-name>
+	<security-role>
+		<role-name>BASICO</role-name>
 	</security-role>
-	<filter>
-		<filter-name>FiltroCodificacion</filter-name>
-		<filter-class>uy.com.antel.cuenca.filtro.Codificacion</filter-class>
-	</filter>
-	<filter-mapping>
-		 <filter-name>FiltroCodificacion</filter-name>
-		 <url-pattern>/paginas/*</url-pattern>
-	</filter-mapping>
- </web-app>
+</web-app>

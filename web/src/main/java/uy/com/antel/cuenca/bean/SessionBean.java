@@ -13,6 +13,6 @@ public class SessionBean {
 		ExternalContext ec = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		ec.invalidateSession();
-		ec.redirect(ec.getRequestContextPath() + "/paginas/persona");
+		ec.redirect(ec.getRequestContextPath() + "/paginas/cuenca");
 	}
 }

@@ -23,12 +23,10 @@
    <persistence-unit name="primary">
       <!-- If you are running in a production environment, add a managed 
          data source, this example data source is just for development and testing! -->
-      <!-- The datasource is deployed as <EAR>/META-INF/cuenca-ds.xml, you
-         can find it in the source at ear/src/main/application/META-INF/cuenca-ds.xml -->
-      <jta-data-source>java:jboss/datasources/cuencaDS</jta-data-source>
+      <jta-data-source>java:jboss/datasources/CuencaDS</jta-data-source>
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create" />
+         <property name="hibernate.hbm2ddl.auto" value="update" />
          <property name="hibernate.show_sql" value="true" />
       </properties>
    </persistence-unit>

@@ -10,18 +10,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "rol")
+@Table(name = "roles")
 public class Rol implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,9 +23,6 @@ public class Rol implements Serializable {
 	
 	private String descripcion;
 	
-//	@OneToMany(mappedBy="rol")
-//	private List<Persona> persona;
-
 	public Rol() {
 		super();
 	}
@@ -97,11 +87,4 @@ public class Rol implements Serializable {
 		return "Rol [id=" + id + ", rol=" + rol + ", descripcion=" + descripcion + "]";
 	}
 
-//	public List<Persona> getPersona() {
-//		return persona;
-//	}
-//
-//	public void setPersona(List<Persona> persona) {
-//		this.persona = persona;
-//	}
 }

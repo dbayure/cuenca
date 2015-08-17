@@ -16,11 +16,8 @@ import org.jboss.security.auth.spi.Util;
 @XmlRootElement
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 170052863820102989L;
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,6 +79,7 @@ public class Usuario implements Serializable {
 	public void setPassword(String password) {
 		String passHash = Util.createPasswordHash("SHA-256", "base64", null, null, password);
 		this.password = passHash;
+		//this.password = password;
 	}
 
 	public Integer getTelefono() {

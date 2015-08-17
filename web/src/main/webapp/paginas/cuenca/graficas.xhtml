@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1 style="text-align: center;">Gráficas de la Cuenca</h1>
+
+		<h:form id="form" prependId="false">
+			<h:panelGrid columns="2" columnClasses="left,right"	style="width:100%">
+				<p:chart type="line" model="#{graficaBean.animatedModel1}" style="width:400px;" />
+				<p:chart type="line" model="#{graficaBean.animatedModel2}"	style="width:400px;" />
+				<p:chart type="bar" model="#{graficaBean.animatedModel3}" style="width:400px;" />
+				<p:chart type="bar" model="#{graficaBean.animatedModel4}"	style="width:400px;" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -54,6 +54,12 @@ public class RegistroUsuario {
 		   usuarioEventSrc.fire(newUsuario);
 	   }
 
+	   public Usuario buscar(Long id) throws Exception {
+		   log.info("Buscar " + id);
+		   Usuario usuario = em.find(Usuario.class, id);
+		   return usuario;
+	   }
+	   
 	   @PostConstruct
 	   public void initNewUsuario() {
 		   newUsuario = new Usuario();
