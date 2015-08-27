@@ -12,8 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import uy.com.antel.cuenca.model.Rol;
 
-
-
 @Stateful
 @Model
 public class RegistroRol {

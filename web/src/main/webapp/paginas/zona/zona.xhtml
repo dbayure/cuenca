@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Administración de Zonas</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Registro</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         
+         <h:panelGrid columns="2" >
+
+			<p:outputLabel for="nombre" value="Nombre:" />
+			<p:inputText id="nombre" value="#{newZona.nombre}" label="nombre" required="true" />
+			
+			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:inputText id="desc" value="#{newZona.descripcion}" label="descripcion" required="false" />
+			
+			<p:selectManyCheckbox id="nodos" value="#{newZona.nodos}" required="false">
+				<f:converter converterId="sensorConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{nodos}" var="_nodo" itemLabel="#{_nodo.nombre}" itemValue="#{_nodo}"/>
+			</p:selectManyCheckbox>
+
+		</h:panelGrid>
+         
+         <p>            
+            <h:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+         </p>
+      
+       <p:dataTable id="zonas" var="_zona" value="#{zonas}" editable="true">
+       		<f:facet name="header">  
+            	Administrar Zonas  
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{zonaBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{zonaBean.onCancel}" update=":form:messages" />  
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_zona.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Nombre" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_zona.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputNombre" value="#{_zona.nombre}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+        	 <p:column headerText="Descripcion" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_zona.descripcion}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_zona.descripcion}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	            	 
+           	 <p:column style="width:3%">           	 
+	            <p:rowEditor />	         	           
+	        </p:column>
+	       <!--  -->
+	        <p:column style="width:3%">
+	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{zonaBean.eliminar(_zona.id)}">
+	        	</p:commandLink>	        	
+	        </p:column>
+	        
+       </p:dataTable>       
+		</h:form>     
+   </ui:define>
+</ui:composition>

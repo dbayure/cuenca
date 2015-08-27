@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Administración de Nodos</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Registro</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         
+         <h:panelGrid columns="2" >
+
+			<p:outputLabel for="nombre" value="Nombre:" />
+			<p:inputText id="nombre" value="#{newNodo.nombre}" label="nombre" required="true" />
+			
+			<p:outputLabel for="modelo" value="Modelo" />
+			<p:inputText id="modelo" value="#{newNodo.modelo}" label="modelo" required="false" />
+
+			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:inputText id="desc" value="#{newNodo.descripcion}" label="descripcion" required="false" />	
+			
+			<p:outputLabel for="sim" value="SIM" />
+			<p:inputText id="sim" value="#{newNodo.sim}" label="sim" required="false" />			
+
+			<p:outputLabel for="serie" value="Serie:" />
+			<p:inputText id="serie" value="#{newNodo.serie}" label="serie" required="true" />
+			
+			<p:outputLabel for="estado" value="Estado:" />
+			<p:inputText id="estado" value="#{newNodo.estado}" label="estado" required="false" />
+
+			<p:outputLabel for="bateria" value="Bateria:" />
+			<p:inputText id="bateria" value="#{newNodo.bateria}" label="bateria" required="true" />
+			
+			<p:outputLabel for="lat" value="Latitud:" />
+			<p:inputText id="lat" value="#{newNodo.latitud}" label="lat" required="false" />
+
+			<p:outputLabel for="long" value="Longidtud:" />
+			<p:inputText id="long" value="#{newNodo.longitud}" label="long" required="true" />
+			
+			<p:selectOneMenu id="sensores" value="#{newMedida.sensores}" required="true">
+				<f:converter converterId="sensorConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{sensores}" var="_sensores" itemLabel="#{_sensores.nombre}" itemValue="#{_sensores}"/>
+			</p:selectOneMenu>
+			 		
+		</h:panelGrid>
+         
+         <p>            
+            <h:commandButton id="register" action="#{nodoBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+         </p>      
+      
+       <p:dataTable id="nodos" var="_nodo" value="#{nodos}" editable="true">
+       		<f:facet name="header">  
+            	Administrar Nodos  
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{nodoBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{nodoBean.onCancel}" update=":form:messages" />  
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_nodo.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Nombre" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputNombre" value="#{_nodo.nombre}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+        	 <p:column headerText="Modelo" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.modelo}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputModelo" value="#{_nodo.modelo}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>
+           	 
+           	 <p:column headerText="Descripcion" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.descripcion}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputDescripcion" value="#{_nodo.descripcion}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="SIM" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.sim}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputSim" value="#{_nodo.sim}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="Serie" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.serie}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputSerie" value="#{_nodo.serie}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="Estado" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.estado}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputEstado" value="#{_nodo.estado}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="Bateria" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.bateria}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputBateria" value="#{_nodo.bateria}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>        
+           	 
+           	 <p:column headerText="Latitud" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.latitud}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputLatitud" value="#{_nodo.latitud}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="Longitud" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_nodo.longitud}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputLongitud" value="#{_nodo.longitud}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>       	            	   
+           	            	 
+           	 <p:column style="width:3%">           	 
+	            <p:rowEditor />	         	           
+	        </p:column>
+	       <!--  -->
+	        <p:column style="width:3%">
+	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{nodoBean.eliminar(_nodo.id)}">
+	        	</p:commandLink>	        	
+	        </p:column>
+	        
+       </p:dataTable>       
+		</h:form>     
+   </ui:define>
+</ui:composition>

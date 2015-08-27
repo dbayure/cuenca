@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Administración de Medidas</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Registro</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         
+         <h:panelGrid columns="2" >
+
+			<p:outputLabel for="nombre" value="Nombre:" />
+			<p:inputText id="nombre" value="#{newMedida.nombre}" label="nombre" required="true" />
+			
+			<p:outputLabel for="unidad" value="Unidad:" />
+			<p:inputText id="unidad" value="#{newMedida.unidad}" label="unidad" required="false" />
+			
+			<p:outputLabel for="vmin" value="Valor Min:" />
+			<p:inputText id="vmin" value="#{newMedida.valorMin}" label="valorMin" required="false" />
+			
+			<p:outputLabel for="vmax" value="Valor Max:" />
+			<p:inputText id="vmax" value="#{newMedida.valorMax}" label="valorMax" required="false" />
+			
+			<p:outputLabel for="estado" value="Estado" />
+			<p:inputText id="estado" value="#{newMedida.estado}" label="estado" required="false" />
+			
+			<p:selectOneMenu id="sensores" value="#{newMedida.sensores}" required="true">
+				<f:converter converterId="sensorConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{sensores}" var="_sensores" itemLabel="#{_sensores.nombre}" itemValue="#{_sensores}"/>
+			</p:selectOneMenu> 		
+
+		</h:panelGrid>
+         
+         <p>            
+            <h:commandButton id="register" action="#{medidaBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+         </p>      
+      
+       <p:dataTable id="medidas" var="_medida" value="#{medidas}" editable="true">
+       		<f:facet name="header">  
+            	Administrar Medidas  
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{medidaBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{medidaBean.onCancel}" update=":form:messages" />  
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_medida.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Nombre" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_medida.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputMedida" value="#{_medida.id}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+        	 <p:column headerText="Unidad" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_medida.unidad}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputUnidad" value="#{_medida.unidad}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>
+           	 
+           	 <p:column headerText="Valor Min" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output">
+							<h:outputText value="#{_medida.valorMin}" />
+						</f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputVMin" value="#{_medida.valorMin}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>
+           	 
+           	 <p:column headerText="Valor Max" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output">
+							<h:outputText value="#{_medida.valorMax}" />
+						</f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputVMax" value="#{_medida.valorMax}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>        
+           	 
+           	 <p:column headerText="Estado" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_medida.estado}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputEstado" value="#{_medida.estado}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	            	 
+           	 <p:column style="width:3%">           	 
+	            <p:rowEditor />	         	           
+	        </p:column>
+	       <!--  -->
+	        <p:column style="width:3%">
+	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{medidaBean.eliminar(_medida.id)}">
+	        	</p:commandLink>	        	
+	        </p:column>
+	        
+       </p:dataTable>       
+		</h:form>     
+   </ui:define>
+</ui:composition>

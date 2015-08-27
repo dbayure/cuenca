@@ -9,12 +9,25 @@
 		<h1 style="text-align: center;">Gráficas de la Cuenca</h1>
 
 		<h:form id="form" prependId="false">
+										
+			<h:panelGrid columns="2">
+			
+				<p:outputLabel for="fechaMinF" value="Fecha Min:" />
+      				<p:calendar id="fechaMinF" value="#{graficaBean.fechaMin}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
+			
+	            <p:outputLabel for="fechaMaxF" value="Fecha Max:" />
+      				<p:calendar id="fechaMaxF" value="#{graficaBean.fechaMax}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
+	            
+			</h:panelGrid>
+		
+		
 			<h:panelGrid columns="2" columnClasses="left,right"	style="width:100%">
 				<p:chart type="line" model="#{graficaBean.animatedModel1}" style="width:400px;" />
 				<p:chart type="line" model="#{graficaBean.animatedModel2}"	style="width:400px;" />
 				<p:chart type="bar" model="#{graficaBean.animatedModel3}" style="width:400px;" />
 				<p:chart type="bar" model="#{graficaBean.animatedModel4}"	style="width:400px;" />
 			</h:panelGrid>
+			
 		</h:form>
 	</ui:define>
 </ui:composition>

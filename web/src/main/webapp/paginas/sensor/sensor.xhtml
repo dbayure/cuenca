@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Administración de Sensores</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Registro</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         
+         <h:panelGrid columns="2" >
+
+			<p:outputLabel for="nombre" value="Nombre:" />
+			<p:inputText id="nombre" value="#{newSensor.nombre}" label="nombre" required="true" />
+			
+			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:inputText id="desc" value="#{newSensor.descripcion}" label="descripcion" required="false" />
+
+			<p:outputLabel for="modelo" value="Modelo:" />
+			<p:inputText id="modelo" value="#{newSensor.modelo}" label="modelo" required="false" />
+						
+			<p:outputLabel for="estado" value="Estado:" />
+			<p:inputText id="estado" value="#{newSensor.estado}" label="estado" required="false" />
+			
+			<p:selectOneMenu id="nodo" value="#{newSensor.nodo}" required="true">
+				<f:converter converterId="nodoConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{nodos}" var="_nodos" itemLabel="#{_nodos.nombre}" itemValue="#{_nodos}"/>
+			</p:selectOneMenu> 		
+			
+			<p:selectManyCheckbox id="medidas" value="#{newSensor.medidas}" required="false">
+				<f:converter converterId="sensorConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{medidas}" var="_medidas" itemLabel="#{_medidas.nombre}" itemValue="#{_medidas}"/>
+			</p:selectManyCheckbox>
+
+		</h:panelGrid>
+         
+         <p>            
+            <h:commandButton id="register" action="#{sensorBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+         </p>      
+      
+       <p:dataTable id="sensores" var="_sen" value="#{sensores}" editable="true">
+       		<f:facet name="header">  
+            	Administrar Sensores
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{sensorBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{sensorBean.onCancel}" update=":form:messages" />  
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_sen.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Nombre" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_sen.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelNombre" value="#{_sen.nombre}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+        	 <p:column headerText="Descripcion" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_sen.descripcion}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_sen.descripcion}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>
+
+        	 <p:column headerText="Modelo" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_sen.modelo}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputMod" value="#{_sen.modelo}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>             	 
+           	 
+        	 <p:column headerText="Estado" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_sen.estado}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputEst" value="#{_sen.estado}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>             	   
+           	 
+           	 <p:column headerText="Nodo" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_sen.nodo.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputNodo" value="#{_sen.nodo.nombre}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	            	 
+           	 <p:column style="width:3%">           	 
+	            <p:rowEditor />	         	           
+	        </p:column>
+	       <!--  -->
+	        <p:column style="width:3%">
+	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{sensorBean.eliminar(_sen.id)}">
+	        	</p:commandLink>	        	
+	        </p:column>
+	        
+       </p:dataTable>       
+		</h:form>     
+   </ui:define>
+</ui:composition>
