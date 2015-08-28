@@ -43,11 +43,22 @@
 			<p:outputLabel for="long" value="Longidtud:" />
 			<p:inputText id="long" value="#{newNodo.longitud}" label="long" required="true" />
 			
-			<p:selectOneMenu id="sensores" value="#{newMedida.sensores}" required="true">
-				<f:converter converterId="sensorConverter" />
+			<p:outputLabel for="sensores" value="Sensores:" />
+        	<p:selectManyMenu id="sensores" value="#{newNodo.sensores}" required="false" var="s" filter="true" filterMatchMode="contains" showCheckbox="true">
+	        	<f:converter converterId="sensorConverter"/>
+	        	<f:selectItem itemLabel="Seleccione..." itemValue=""/>   
+	            <f:selectItems value="#{sensores}" var="_sens" itemLabel="#{_sens.nombre}" itemValue="#{_sens}"/>
+	            <p:column>
+	                <h:outputText value="#{_sens.nombre}" />
+	            </p:column>
+        	</p:selectManyMenu>
+        	
+        	<p:outputLabel for="zona" value="Zona:" />
+			<p:selectOneMenu id="zona" value="#{newNodo.zona}" required="false">
+				<f:converter converterId="zonaConverter" />
 				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
-				<f:selectItems value="#{sensores}" var="_sensores" itemLabel="#{_sensores.nombre}" itemValue="#{_sensores}"/>
-			</p:selectOneMenu>
+				<f:selectItems value="#{zonas}" var="_zona" itemLabel="#{_zona.nombre}" itemValue="#{_zona}"/>
+			</p:selectOneMenu> 	
 			 		
 		</h:panelGrid>
          

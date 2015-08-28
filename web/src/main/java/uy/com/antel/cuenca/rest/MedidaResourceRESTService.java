@@ -1,6 +1,7 @@
 package uy.com.antel.cuenca.rest;
 
 import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,7 +16,7 @@ import uy.com.antel.cuenca.model.Medida;
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/Medidas")
+@Path("/medidas")
 @RequestScoped
 public class MedidaResourceRESTService {
 	
@@ -32,7 +33,7 @@ public class MedidaResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Medida> results = em.createQuery("select c from medidas c order by c.id").getResultList();
+      final List<Medida> results = em.createQuery("select c from Medida c order by c.id").getResultList();
       return results;
    }
 

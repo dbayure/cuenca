@@ -31,7 +31,8 @@
 			<p:outputLabel for="estado" value="Estado" />
 			<p:inputText id="estado" value="#{newMedida.estado}" label="estado" required="false" />
 			
-			<p:selectOneMenu id="sensores" value="#{newMedida.sensores}" required="true">
+			<p:outputLabel for="sensores" value="Sensor:" />
+			<p:selectOneMenu id="sensores" value="#{newMedida.sensor}" required="false">
 				<f:converter converterId="sensorConverter" />
 				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
 				<f:selectItems value="#{sensores}" var="_sensores" itemLabel="#{_sensores.nombre}" itemValue="#{_sensores}"/>

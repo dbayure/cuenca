@@ -6,7 +6,7 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración de Funcionarios</h1>
+      <h1 style="text-align: center;">Administración de Usuarios</h1>
 	
 
       <h:form id="form" prependId="false">
@@ -17,17 +17,17 @@
          <h:panelGrid columns="2" >
 
 			<p:outputLabel for="nombre" value="Nombre:" />
-			<p:inputText id="nombre" value="#{newFuncionario.nombre}" label="nombre" required="true" />
+			<p:inputText id="nombre" value="#{newUsuario.nombre}" label="nombre" required="true" />
 			<p:outputLabel for="usuario" value="Usuario:" />
-			<p:inputText id="usuario" value="#{newFuncionario.usuario}" label="usuario" required="true" />
+			<p:inputText id="usuario" value="#{newUsuario.usuario}" label="usuario" required="true" />
 			<p:outputLabel for="pass" value="Contraseña:" />
-			<p:password id="pass" value="#{newFuncionario.password}" label="contraseña" required="true"/>
+			<p:password id="pass" value="#{newUsuario.password}" label="contraseña" required="true"/>
 			<p:outputLabel for="tel" value="Telefono:" />
-			<p:inputText id="tel" value="#{newFuncionario.telefono}" label="telefono" required="true" />
+			<p:inputText id="tel" value="#{newUsuario.telefono}" label="telefono" required="true" />
 			<p:outputLabel for="correo" value="Correo:" />
-			<p:inputText id="correo" value="#{newFuncionario.correo}" label="correo" required="true" />
+			<p:inputText id="correo" value="#{newUsuario.correo}" label="correo" required="true" />
 			<p:outputLabel for="rol" value="Perfil"/>
-			<p:selectOneMenu id="rol" value="#{newFuncionario.rol}" required="true">
+			<p:selectOneMenu id="rol" value="#{newUsuario.rol}" required="true">
 				<f:converter converterId="rolConverter" />
 				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
 				<f:selectItems value="#{roles}" var="rol" itemLabel="#{rol.rol}" itemValue="#{rol}"/>
@@ -35,19 +35,19 @@
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{funcionarioBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <h:commandButton id="register" action="#{usuarioBean.registrar}" value="Registrar" style="margin-left: 400px;" />
          </p>      
-      <h:panelGroup rendered="#{empty funcionario}">
-         <em>No hay Funcionario registrado.</em>
+      <h:panelGroup rendered="#{empty Usuario}">
+         <em>No hay Usuarios registrados.</em>
       </h:panelGroup>
       
-       <p:dataTable id="funcionarios" var="_func" value="#{funcionario}" editable="true">
+       <p:dataTable id="usuarios" var="_func" value="#{usuarios}" editable="true">
        		<f:facet name="header">  
-            	Administrar Funcionarios  
+            	Administrar Usuarios  
         	</f:facet>
         	
-        	<p:ajax event="rowEdit" listener="#{funcionarioBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{funcionarioBean.onCancel}" update=":form:messages" />  
+        	<p:ajax event="rowEdit" listener="#{usuarioBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{usuarioBean.onCancel}" update=":form:messages" />  
         	 
         	 <p:column headerText="Id" style="width:5%">
         	 	<h:outputText value="#{_func.id}" />
@@ -80,7 +80,7 @@
 	       <!--  -->
 	        <p:column style="width:3%">
 	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{funcionarioBean.eliminar(_func.id)}">
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{usuarioBean.eliminar(_func.id)}">
 	        	</p:commandLink>	        	
 	        </p:column>
 	        

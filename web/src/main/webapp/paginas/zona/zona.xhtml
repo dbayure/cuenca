@@ -22,16 +22,20 @@
 			<p:outputLabel for="desc" value="Descripcion:" />
 			<p:inputText id="desc" value="#{newZona.descripcion}" label="descripcion" required="false" />
 			
-			<p:selectManyCheckbox id="nodos" value="#{newZona.nodos}" required="false">
-				<f:converter converterId="sensorConverter" />
-				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
-				<f:selectItems value="#{nodos}" var="_nodo" itemLabel="#{_nodo.nombre}" itemValue="#{_nodo}"/>
-			</p:selectManyCheckbox>
+			<p:outputLabel for="nodos" value="Nodos:" />
+        	<p:selectManyMenu id="nodos" value="#{newZona.nodos}" required="false" var="z" filter="true" filterMatchMode="contains" showCheckbox="true">
+	        	<f:converter converterId="nodoConverter"/>
+	        	<f:selectItem itemLabel="Seleccione..." itemValue=""/>   
+	            <f:selectItems value="#{nodos}" var="_nodo" itemLabel="#{_nodo.nombre}" itemValue="#{_nodo}"/>
+	            <p:column>
+	                <h:outputText value="#{_nodo.nombre}" />
+	            </p:column>
+        	</p:selectManyMenu>
 
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <h:commandButton id="register" action="#{zonaBean.registrar}" value="Registrar" style="margin-left: 400px;" />
          </p>
       
        <p:dataTable id="zonas" var="_zona" value="#{zonas}" editable="true">

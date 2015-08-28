@@ -1,16 +1,16 @@
 package uy.com.antel.cuenca.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,11 +35,16 @@ public class Medida implements Serializable {
 
 	private String estado;
 
-    @ManyToMany(mappedBy="medidas", fetch = FetchType.EAGER)
-    private Set<Sensor> sensores;
+	@OneToOne(optional=false, mappedBy="medida", fetch=FetchType.EAGER)
+    private Sensor sensor;
     
-    @OneToMany(targetEntity=Medicion.class, mappedBy="medida", cascade=CascadeType.ALL)
-	private Set<Medida> medidas;
+    @OneToMany(targetEntity=Medicion.class, mappedBy="medida", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<Medicion> mediciones;
+    
+    public Medida (){
+    	super();
+    	mediciones = new HashSet<Medicion>();
+    }
 
 	public Long getId() {
 		return id;
@@ -89,20 +94,20 @@ public class Medida implements Serializable {
 		this.estado = estado;
 	}
 
-	public Set<Sensor> getSensores() {
-		return sensores;
+	public Sensor getSensor() {
+		return sensor;
 	}
 
-	public void setSensores(Set<Sensor> sensores) {
-		this.sensores = sensores;
+	public void setSensor(Sensor sensor) {
+		this.sensor = sensor;
 	}
 
-	public Set<Medida> getMedidas() {
-		return medidas;
+	public Set<Medicion> getMediciones() {
+		return mediciones;
 	}
 
-	public void setMedidas(Set<Medida> medidas) {
-		this.medidas = medidas;
+	public void setMediciones(Set<Medicion> mediciones) {
+		this.mediciones = mediciones;
 	}
 
 	public static long getSerialversionuid() {
@@ -116,6 +121,7 @@ public class Medida implements Serializable {
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((sensor == null) ? 0 : sensor.hashCode());
 		result = prime * result + ((unidad == null) ? 0 : unidad.hashCode());
 		result = prime * result
 				+ ((valorMax == null) ? 0 : valorMax.hashCode());
@@ -148,6 +154,11 @@ public class Medida implements Serializable {
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
+		if (sensor == null) {
+			if (other.sensor != null)
+				return false;
+		} else if (!sensor.equals(other.sensor))
+			return false;
 		if (unidad == null) {
 			if (other.unidad != null)
 				return false;
@@ -165,5 +176,6 @@ public class Medida implements Serializable {
 			return false;
 		return true;
 	}
+
 
 }

@@ -33,7 +33,7 @@ public class UsuarioResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Usuario> results = em.createQuery("select c from usuarios c order by c.id").getResultList();
+      final List<Usuario> results = em.createQuery("select c from Usuario c order by c.id").getResultList();
       return results;
    }
 

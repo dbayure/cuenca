@@ -15,7 +15,7 @@ import uy.com.antel.cuenca.model.Nodo;
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/Nodos")
+@Path("/nodos")
 @RequestScoped
 public class NodoResourceRESTService {
 	
@@ -32,7 +32,7 @@ public class NodoResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Nodo> results = em.createQuery("select c from nodos c order by c.id").getResultList();
+      final List<Nodo> results = em.createQuery("select c from Nodo c order by c.id").getResultList();
       return results;
    }
 

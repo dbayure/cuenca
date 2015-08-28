@@ -1,9 +1,12 @@
 package uy.com.antel.cuenca.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "sensores")
+@Table(name = "nodos")
 public class Nodo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +37,7 @@ public class Nodo implements Serializable {
 	
 	private String serie;
 
-	private Integer estado;
+	private String estado;
 	
 	private String bateria;
 	
@@ -42,12 +45,17 @@ public class Nodo implements Serializable {
 	
 	private String longitud;
 
-	@OneToMany(targetEntity=Sensor.class, mappedBy="nodo", cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=Sensor.class, mappedBy="nodo", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Sensor> sensores;
 
 	@ManyToOne
 	@JoinColumn(name="zona_id", nullable=false)
 	private Zona zona;
+	
+	public Nodo(){
+		super();
+		sensores = new HashSet<Sensor>();
+	}
 
 	public Long getId() {
 		return id;
@@ -97,11 +105,11 @@ public class Nodo implements Serializable {
 		this.serie = serie;
 	}
 
-	public Integer getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Integer estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

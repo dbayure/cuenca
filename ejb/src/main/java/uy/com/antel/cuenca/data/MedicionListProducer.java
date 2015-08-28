@@ -41,7 +41,7 @@ public class MedicionListProducer {
       CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Medicion> criteria = cb.createQuery(Medicion.class);
       Root<Medicion> medicion = criteria.from(Medicion.class);
-      criteria.select(medicion).orderBy(cb.asc(medicion.get("medicion")));
+      criteria.select(medicion).orderBy(cb.asc(medicion.get("id")));
       mediciones = em.createQuery(criteria).getResultList();
    }
 }

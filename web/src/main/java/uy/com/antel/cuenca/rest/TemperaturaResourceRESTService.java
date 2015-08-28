@@ -33,7 +33,7 @@ public class TemperaturaResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Temperatura> results = em.createQuery("select c from temperatura c order by c.id").getResultList();
+      final List<Temperatura> results = em.createQuery("select c from Temperatura c order by c.id").getResultList();
       return results;
    }
 

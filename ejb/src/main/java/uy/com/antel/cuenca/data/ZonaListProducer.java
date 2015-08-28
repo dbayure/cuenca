@@ -42,7 +42,7 @@ public class ZonaListProducer {
       CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Zona> criteria = cb.createQuery(Zona.class);
       Root<Zona> zona = criteria.from(Zona.class);
-      criteria.select(zona).orderBy(cb.asc(zona.get("zona")));
+      criteria.select(zona).orderBy(cb.asc(zona.get("nombre")));
       zonas = em.createQuery(criteria).getResultList();
    }
 }

@@ -100,10 +100,10 @@ public class GraficaBean {
 	    	LineChartSeries PH = new LineChartSeries();
 	        PH.setLabel("PH");
 	        for (Temperatura medidaPH : valores.getTemparturas()){
-	        	if(medidaPH.getfevento().after(fechaMin) && medidaPH.getfevento().before(fechaMax)){
+	        	//if(medidaPH.getfevento().after(fechaMin) && medidaPH.getfevento().before(fechaMax)){
 	        		PH.set(medidaPH.getfevento(), Float.parseFloat(medidaPH.getPh()));
 	        		System.out.println("Valor fecha temperatura: "+medidaPH.getfevento());
-	        	}
+	        	//}
 	        }
 	        	
 	        LineChartSeries DO = new LineChartSeries();
@@ -117,7 +117,7 @@ public class GraficaBean {
 	        model.addSeries(PH);
 	        model.addSeries(DO);
 	         
-	        return model;
+	        return model;																																																																												
 	    } 
 	    
 	    private LineChartModel initLinearModel2() {

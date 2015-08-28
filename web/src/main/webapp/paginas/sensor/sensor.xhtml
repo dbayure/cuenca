@@ -28,23 +28,39 @@
 			<p:outputLabel for="estado" value="Estado:" />
 			<p:inputText id="estado" value="#{newSensor.estado}" label="estado" required="false" />
 			
-			<p:selectOneMenu id="nodo" value="#{newSensor.nodo}" required="true">
+			<p:outputLabel for="medida" value="Medida" />
+			<p:selectOneMenu id="medida" value="#{newSensor.medida}" required="false">
+				<f:converter converterId="medidaConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{medidas}" var="_med" itemLabel="#{_med.nombre}" itemValue="#{_med}"/>
+			</p:selectOneMenu> 	
+			
+			<p:outputLabel for="nodo" value="Nodo:" />
+			<p:selectOneMenu id="nodo" value="#{newSensor.nodo}" required="false">
 				<f:converter converterId="nodoConverter" />
 				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
-				<f:selectItems value="#{nodos}" var="_nodos" itemLabel="#{_nodos.nombre}" itemValue="#{_nodos}"/>
-			</p:selectOneMenu> 		
+				<f:selectItems value="#{nodos}" var="_nodo" itemLabel="#{_nodo.nombre}" itemValue="#{_nodo}"/>
+			</p:selectOneMenu> 	
 			
-			<p:selectManyCheckbox id="medidas" value="#{newSensor.medidas}" required="false">
-				<f:converter converterId="sensorConverter" />
-				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
-				<f:selectItems value="#{medidas}" var="_medidas" itemLabel="#{_medidas.nombre}" itemValue="#{_medidas}"/>
-			</p:selectManyCheckbox>
-
+<!-- 			<p:outputLabel for="medidas" value="Medidas:" /> -->
+<!--         	<p:selectManyMenu id="medidas" value="#{newMedida.medidas}" required="false" var="m" filter="true" filterMatchMode="contains" showCheckbox="true"> -->
+<!-- 	        	<f:converter converterId="medidaConverter"/> -->
+<!-- 	        	<f:selectItem itemLabel="Seleccione..." itemValue=""/>    -->
+<!-- 	            <f:selectItems value="#{medidas}" var="_med" itemLabel="#{_med.nombre}" itemValue="#{_med}"/> -->
+<!-- 	            <p:column> -->
+<!-- 	                <h:outputText value="#{_med.nombre}" /> -->
+<!-- 	            </p:column> -->
+<!--         	</p:selectManyMenu> -->
+			
 		</h:panelGrid>
          
          <p>            
             <h:commandButton id="register" action="#{sensorBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-         </p>      
+         </p>     
+         
+        <h:panelGroup rendered="#{empty sensor}">
+         <em>No hay Sensores registrados.</em>
+        </h:panelGroup> 
       
        <p:dataTable id="sensores" var="_sen" value="#{sensores}" editable="true">
        		<f:facet name="header">  

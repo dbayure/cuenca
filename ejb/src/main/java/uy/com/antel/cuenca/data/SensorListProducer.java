@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 import uy.com.antel.cuenca.model.Sensor;
 
 
+
 @RequestScoped
 public class SensorListProducer {
 	
@@ -42,7 +43,7 @@ public class SensorListProducer {
       CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Sensor> criteria = cb.createQuery(Sensor.class);
       Root<Sensor> sensor = criteria.from(Sensor.class);
-      criteria.select(sensor).orderBy(cb.asc(sensor.get("sensor")));
+      criteria.select(sensor).orderBy(cb.asc(sensor.get("nombre")));
       sensores = em.createQuery(criteria).getResultList();
    }
 }

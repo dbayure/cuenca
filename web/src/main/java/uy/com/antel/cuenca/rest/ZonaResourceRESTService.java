@@ -16,7 +16,7 @@ import uy.com.antel.cuenca.model.Zona;
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/Zonas")
+@Path("/zonas")
 @RequestScoped
 public class ZonaResourceRESTService {
 	
@@ -33,7 +33,7 @@ public class ZonaResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Zona> results = em.createQuery("select c from zonas c order by c.id").getResultList();
+      final List<Zona> results = em.createQuery("select c from Zona c order by c.id").getResultList();
       return results;
    }
 

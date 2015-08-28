@@ -42,7 +42,7 @@ public class NodoListProducer {
       CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Nodo> criteria = cb.createQuery(Nodo.class);
       Root<Nodo> nodo = criteria.from(Nodo.class);
-      criteria.select(nodo).orderBy(cb.asc(nodo.get("nodo")));
+      criteria.select(nodo).orderBy(cb.asc(nodo.get("nombre")));
       nodos = em.createQuery(criteria).getResultList();
    }
 }

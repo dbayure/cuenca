@@ -1,6 +1,7 @@
 package uy.com.antel.cuenca.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,10 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,19 +33,23 @@ public class Sensor implements Serializable {
 
 	private String modelo;
 
-	private Integer estado;
+	private String estado;
 
-    @ManyToMany (fetch = FetchType.EAGER)
-    @JoinTable(name="sensores-medidas", joinColumns= @JoinColumn(name="sensor_id", referencedColumnName="id"),
-        						  inverseJoinColumns=@JoinColumn(name="medida_id", referencedColumnName="id") )
-    private Set<Medida> medidas;
+    @OneToOne(optional=false, fetch=FetchType.EAGER)
+    @JoinColumn(name="medida_id", unique=true, nullable=false, updatable=false)
+    private Medida medida;
 
     @ManyToOne
     @JoinColumn(name="nodo_id", nullable=false)
     private Nodo nodo;
     
-    @OneToMany(targetEntity=Medicion.class, mappedBy="sensor", cascade=CascadeType.ALL)
+    @OneToMany(targetEntity=Medicion.class, mappedBy="sensor", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Medicion> mediciones;
+    
+    public Sensor (){
+    	super();
+    	mediciones = new HashSet<Medicion>();
+    }
 
 	public Long getId() {
 		return id;
@@ -79,20 +83,20 @@ public class Sensor implements Serializable {
 		this.modelo = modelo;
 	}
 
-	public Integer getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Integer estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
-	public Set<Medida> getMedidas() {
-		return medidas;
+	public Medida getMedida() {
+		return medida;
 	}
 
-	public void setMedidas(Set<Medida> medidas) {
-		this.medidas = medidas;
+	public void setMedida(Medida medida) {
+		this.medida = medida;
 	}
 
 	public Nodo getNodo() {
@@ -171,4 +175,5 @@ public class Sensor implements Serializable {
 		return true;
 	}
 
+	
 }

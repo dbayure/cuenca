@@ -16,7 +16,7 @@ import uy.com.antel.cuenca.model.Medicion;
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/medicions")
+@Path("/mediciones")
 @RequestScoped
 public class MedicionResourceRESTService {
 	
@@ -33,7 +33,7 @@ public class MedicionResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Medicion> results = em.createQuery("select c from mediciones c order by c.id").getResultList();
+      final List<Medicion> results = em.createQuery("select c from Medicion c order by c.id").getResultList();
       return results;
    }
 

@@ -42,7 +42,7 @@ public class MedidaListProducer {
       CriteriaBuilder cb = em.getCriteriaBuilder();
       CriteriaQuery<Medida> criteria = cb.createQuery(Medida.class);
       Root<Medida> medida = criteria.from(Medida.class);
-      criteria.select(medida).orderBy(cb.asc(medida.get("medida")));
+      criteria.select(medida).orderBy(cb.asc(medida.get("nombre")));
       medidas = em.createQuery(criteria).getResultList();
    }
 }

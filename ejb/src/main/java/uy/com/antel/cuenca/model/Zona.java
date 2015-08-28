@@ -1,9 +1,12 @@
 package uy.com.antel.cuenca.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "sensores")
+@Table(name = "zonas")
 public class Zona implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,8 +29,13 @@ public class Zona implements Serializable {
 
 	private String descripcion;
 
-	@OneToMany(targetEntity=Nodo.class, mappedBy="zona", cascade=CascadeType.ALL)
+	@OneToMany(targetEntity=Nodo.class, mappedBy="zona", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Nodo> nodos;
+	
+	public Zona(){
+		super();
+		nodos = new HashSet<Nodo>();
+	}
 
 	public Long getId() {
 		return id;

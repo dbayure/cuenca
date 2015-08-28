@@ -17,19 +17,21 @@
 
 			<h:panelGrid columns="2">
 
-				<p:selectOneMenu id="Sensor" value="#{newMedicion.sensor}" required="true">
+				<p:outputLabel for="sensor" value="Sensor:" />
+				<p:selectOneMenu id="sensor" value="#{newMedicion.sensor}" required="true">
 					<f:converter converterId="sensorConverter" />
 					<f:selectItem itemLabel="Seleccione..." itemValue="" />
 					<f:selectItems value="#{sensores}" var="_sensores" itemLabel="#{_sensores.nombre}" itemValue="#{_sensores}" />
 				</p:selectOneMenu>
-
-				<p:selectOneMenu id="sensores" value="#{newMedicion.medida}" required="true">
+	
+				<p:outputLabel for="medida" value="Medida:" />
+				<p:selectOneMenu id="medida" value="#{newMedicion.medida}" required="true">
 					<f:converter converterId="sensorConverter" />
 					<f:selectItem itemLabel="Seleccione..." itemValue="" />
 					<f:selectItems value="#{medidas}" var="_medidas" itemLabel="#{_medidas.nombre}" itemValue="#{_medidas}" />
 				</p:selectOneMenu>
 				
-				<p:outputLabel for="Valor" value="Valor:" />
+				<p:outputLabel for="valor" value="Valor:" />
 				<p:inputText id="valor" value="#{newMedicion.valor}" label="valor" required="true" />
 			
 				<p:outputLabel for="fecha" value="Fecha :" />
