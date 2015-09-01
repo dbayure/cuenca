@@ -16,9 +16,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "nodos")
+@JsonIgnoreProperties({"zona"})
 public class Nodo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

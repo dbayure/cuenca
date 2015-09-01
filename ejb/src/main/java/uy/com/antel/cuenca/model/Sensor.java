@@ -16,9 +16,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "sensores")
+@JsonIgnoreProperties({"nodo"})
 public class Sensor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +42,7 @@ public class Sensor implements Serializable {
     @JoinColumn(name="medida_id", unique=true, nullable=false, updatable=false)
     private Medida medida;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="nodo_id", nullable=false)
     private Nodo nodo;
     

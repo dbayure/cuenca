@@ -26,7 +26,7 @@
 	
 				<p:outputLabel for="medida" value="Medida:" />
 				<p:selectOneMenu id="medida" value="#{newMedicion.medida}" required="true">
-					<f:converter converterId="sensorConverter" />
+					<f:converter converterId="medidaConverter" />
 					<f:selectItem itemLabel="Seleccione..." itemValue="" />
 					<f:selectItems value="#{medidas}" var="_medidas" itemLabel="#{_medidas.nombre}" itemValue="#{_medidas}" />
 				</p:selectOneMenu>
@@ -40,8 +40,7 @@
 			</h:panelGrid>
 
 			<p>
-				<h:commandButton id="register" action="#{medicionBean.registrar}"
-					value="Registrar" style="margin-left: 400px;" />
+				<h:commandButton id="register" action="#{medicionBean.registrar}" value="Registrar" style="margin-left: 400px;"/>
 			</p>
 
 			<p:dataTable id="mediciones" var="_med" value="#{mediciones}" editable="true">
@@ -56,7 +55,7 @@
 					<h:outputText value="#{_med.id}" />
 				</p:column>
 
-				<p:column headerText="Sensor" style="width:25%">
+				<p:column headerText="Sensor" style="width:15%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_med.sensor.nombre}" />
@@ -68,7 +67,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Medida" style="width:25%">
+				<p:column headerText="Medida" style="width:15%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_med.medida.nombre}" />
@@ -80,7 +79,7 @@
 					</p:cellEditor>
 				</p:column>
 				
-				<p:column headerText="Valor" style="width:25%">
+				<p:column headerText="Valor" style="width:5%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_med.valor}" />
@@ -92,8 +91,8 @@
 					</p:cellEditor>
 				</p:column>
 				
-				<p:column headerText="Fecha" style="width:5%">
-					<h:outputText value="#{_med.fecha}" />
+				<p:column headerText="Fecha" style="width:35%">
+					<h:outputText value="#{_med.fecha}" pattern="dd/MM/yyyy HH:mm:ss"/>
 				</p:column>
 				
 				<p:column style="width:3%">

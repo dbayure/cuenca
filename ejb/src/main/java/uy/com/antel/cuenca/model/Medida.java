@@ -3,6 +3,7 @@ package uy.com.antel.cuenca.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,9 +15,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "medidas")
+@JsonIgnoreProperties({"sensor"})
 public class Medida implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,7 +1,7 @@
 package uy.com.antel.cuenca.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "mediciones")
+@JsonIgnoreProperties({"sensor","medida"})
 public class Medicion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +34,9 @@ public class Medicion implements Serializable {
     @JoinColumn(name="medida_id", nullable=false, updatable=false)
 	private Medida medida;
 	
-	private long valor;
+	private float valor;
 	
-	private Timestamp fecha;
+	private Date fecha;
 
 	public Long getId() {
 		return id;
@@ -59,19 +62,19 @@ public class Medicion implements Serializable {
 		this.medida = medida;
 	}
 
-	public long getValor() {
+	public float getValor() {
 		return valor;
 	}
 
-	public void setValor(long valor) {
+	public void setValor(float valor) {
 		this.valor = valor;
 	}
 
-	public Timestamp getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
@@ -87,7 +90,7 @@ public class Medicion implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((medida == null) ? 0 : medida.hashCode());
 		result = prime * result + ((sensor == null) ? 0 : sensor.hashCode());
-		result = prime * result + (int) (valor ^ (valor >>> 32));
+		result = prime * result + Float.floatToIntBits(valor);
 		return result;
 	}
 
@@ -120,9 +123,9 @@ public class Medicion implements Serializable {
 				return false;
 		} else if (!sensor.equals(other.sensor))
 			return false;
-		if (valor != other.valor)
+		if (Float.floatToIntBits(valor) != Float.floatToIntBits(other.valor))
 			return false;
 		return true;
 	}
-	
+
 }

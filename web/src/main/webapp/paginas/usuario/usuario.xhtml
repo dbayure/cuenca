@@ -67,6 +67,12 @@
                </p:cellEditor>  
            	 </p:column>             	 
            	 
+           	 <p:column headerText="Contraseña" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_func.password}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputPass" value="#{_func.password}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>   
         	 <p:column headerText="Perfil" style="width:25%">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_func.rol.rol}" /></f:facet>  

@@ -5,26 +5,39 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LegendPlacement;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 
-import uy.com.antel.cuenca.data.TemperaturaListProducer;
-import uy.com.antel.cuenca.model.Temperatura;
+import uy.com.antel.cuenca.data.MedicionListProducer;
+import uy.com.antel.cuenca.data.MedidaListProducer;
+import uy.com.antel.cuenca.data.SensorListProducer;
+import uy.com.antel.cuenca.model.Medicion;
+import uy.com.antel.cuenca.model.Medida;
+import uy.com.antel.cuenca.model.Sensor;
 
 @ManagedBean
 @RequestScoped
 public class GraficaBean {
-
-		@Inject 
-		private TemperaturaListProducer valores;
+		
+		@Inject
+		private MedidaListProducer medidas;
+		
+		@Inject
+		private SensorListProducer sensores;
+		
+		@Inject
+		private MedicionListProducer mediciones;
 		
 	    private LineChartModel animatedModel1;
 	    private LineChartModel animatedModel2;
@@ -33,6 +46,10 @@ public class GraficaBean {
 	    
 	    private Date fechaMin;
 	    private Date fechaMax;
+	    
+	    private boolean graficar = false;
+	    
+	    private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 	 
 	    @PostConstruct
 	    public void init() throws ParseException {
@@ -55,148 +72,6 @@ public class GraficaBean {
 	        return animatedModel4;
 	    }
 	    
-	    private void createAnimatedModels() throws ParseException {
-	        animatedModel1 = initLinearModel1();
-	        animatedModel1.setTitle("Evolución PH y DO");
-	        animatedModel1.setAnimate(true);
-	        animatedModel1.setLegendPosition("se");
-	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
-	        String sourceDate = "2015-08-12";
-	        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-	        Date fechaMin = format.parse(sourceDate);
-	        String sourceDatemax = "2015-08-15";
-	        SimpleDateFormat formatmax = new SimpleDateFormat("yyyy-MM-dd");
-	        Date fechaMax = formatmax.parse(sourceDatemax);
-	        yAxis.setMin(fechaMin);
-	        yAxis.setMax(fechaMax);
-	         
-	        animatedModel2 = initLinearModel2();
-	        animatedModel2.setTitle("Evolución Tempertura");
-	        animatedModel2.setAnimate(true);
-	        animatedModel2.setLegendPosition("se");
-	        Axis yAxis2 = animatedModel2.getAxis(AxisType.Y);
-	        yAxis2.setMin(fechaMin);
-	        yAxis2.setMax(fechaMax);
-	        
-	        animatedModel3 = initBarModel1();
-	        animatedModel3.setTitle("Nivel de Bateria");
-	        animatedModel3.setAnimate(true);
-	        animatedModel3.setLegendPosition("ne");
-	        yAxis = animatedModel3.getAxis(AxisType.Y);
-	        yAxis.setMin(0);
-	        yAxis.setMax(30);
-	        
-	        animatedModel4 = initBarModel2();
-	        animatedModel4.setTitle("Niveles Totales");
-	        animatedModel4.setAnimate(true);
-	        animatedModel4.setLegendPosition("ne");
-	        yAxis = animatedModel4.getAxis(AxisType.Y);
-	        yAxis.setMin(0);
-	        yAxis.setMax(30);
-	    }
-
-	    private LineChartModel initLinearModel1() {
-	    	LineChartModel model = new LineChartModel();
-	    	LineChartSeries PH = new LineChartSeries();
-	        PH.setLabel("PH");
-	        for (Temperatura medidaPH : valores.getTemparturas()){
-	        	//if(medidaPH.getfevento().after(fechaMin) && medidaPH.getfevento().before(fechaMax)){
-	        		PH.set(medidaPH.getfevento(), Float.parseFloat(medidaPH.getPh()));
-	        		System.out.println("Valor fecha temperatura: "+medidaPH.getfevento());
-	        	//}
-	        }
-	        	
-	        LineChartSeries DO = new LineChartSeries();
-	        DO.setLabel("DO");
-	        for (Temperatura medidaDO : valores.getTemparturas()){
-	        	String fecha2 = new SimpleDateFormat("yyyy-MM-dd").format(medidaDO.getfevento());
-	        	DO.set(fecha2, Float.parseFloat(medidaDO.getdisoxi())*100);
-	        	System.out.println("Valor fecha temperatura: "+fecha2);
-	        }
-	        
-	        model.addSeries(PH);
-	        model.addSeries(DO);
-	         
-	        return model;																																																																												
-	    } 
-	    
-	    private LineChartModel initLinearModel2() {
-	    	LineChartModel model = new LineChartModel();
-	    	LineChartSeries celcius = new LineChartSeries();
-	        celcius.setLabel("Celsius");
-	        for (Temperatura medidaC : valores.getTemparturas()){
-	        	celcius.set(medidaC.getId()/100, Float.parseFloat(medidaC.getCelcius()));
-	        }
-	        model.addSeries(celcius); 
-	        return model;
-	    }
-	    
-	    private BarChartModel initBarModel1() {
-	        BarChartModel model = new BarChartModel();
-	        ChartSeries voltaje = new ChartSeries();
-	        int nomSensor = valores.getTemparturas().get(0).getSensor();
-	        voltaje.setLabel("Sensor: "+nomSensor);
-	        float v=0;
-	        for (Temperatura medidaV : valores.getTemparturas()){
-	        	float temp = Float.parseFloat(medidaV.getVoltajebateria());
-	        	if (temp>v)
-	        		v=temp;
-	        }
-	        voltaje.set("Nivel", v);
-	        model.addSeries(voltaje);
-	        return model;
-	    }
-	    
-	    private BarChartModel initBarModel2() {
-	        BarChartModel model = new BarChartModel();
-	        
-	        ChartSeries Bateria = new ChartSeries();
-	        Bateria.setLabel("Bateria");
-	        float b=0;
-	        for (Temperatura med : valores.getTemparturas()){
-	        	float temp = Float.parseFloat(med.getVoltajebateria());
-	        	if (temp>b)
-	        		b=temp;
-	        }
-	        Bateria.set("Valores", b);
-	        
-	        ChartSeries PH = new ChartSeries();
-	        float p=0;
-	        PH.setLabel("PH");
-	        for (Temperatura med : valores.getTemparturas()){
-	        	float temp = Float.parseFloat(med.getPh());
-	        	if (temp>p)
-	        		p=temp;
-	        }
-	        PH.set("Valores", p);
-	        
-	        ChartSeries Grados = new ChartSeries();
-	        float g=0;
-	        Grados.setLabel("Grados");
-	        for (Temperatura med : valores.getTemparturas()){
-	        	float temp = Float.parseFloat(med.getCelcius());
-	        	if (temp>g)
-	        		g=temp;
-	        }
-	        Grados.set("Valores",g);
-	        
-	        ChartSeries DO = new ChartSeries();
-	        DO.setLabel("DO");
-	        float d=0;
-	        for (Temperatura med : valores.getTemparturas()){
-	        	float temp = Float.parseFloat(med.getdisoxi())*10;
-	           	if (temp>d)
-	        		d=temp;
-	        }
-	        DO.set("Valores", d);
-	        
-	        model.addSeries(Grados);
-	        model.addSeries(Bateria);
-	        model.addSeries(PH);
-	        model.addSeries(DO);
-	        return model;
-	    }
-
 		public Date getFechaMin() {
 			return fechaMin;
 		}
@@ -212,5 +87,129 @@ public class GraficaBean {
 		public void setFechaMax(Date fechaMax) {
 			this.fechaMax = fechaMax;
 		}
-	
+		
+		public boolean isGraficar() {
+			return graficar;
+		}
+
+		public void setGraficar(boolean graficar) {
+			this.graficar = graficar;
+		}
+	    
+	    private void createAnimatedModels() throws ParseException {
+	        animatedModel1 = initLinearModel1();
+	        animatedModel1.setTitle("Valores según medidas");
+	        animatedModel1.setAnimate(true);
+	        animatedModel1.setLegendPosition("ne");
+	        animatedModel1.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
+	        Axis yAxis = animatedModel1.getAxis(AxisType.Y);
+	        yAxis.setMin(0);
+	        yAxis.setMax(50);
+	         
+	        animatedModel2 = initLinearModel2();
+	        animatedModel2.setTitle("Valores según sensores");
+	        animatedModel2.setAnimate(true);
+	        animatedModel2.setLegendPosition("ne");
+	        animatedModel2.setLegendPlacement(LegendPlacement.OUTSIDEGRID);	        
+	        Axis yAxis2 = animatedModel2.getAxis(AxisType.Y);
+	        yAxis2.setMin(0);
+	        yAxis2.setMax(50);
+	        
+	        animatedModel3 = initBarModel1();
+	        animatedModel3.setTitle("Medidas por fecha");
+	        animatedModel3.setAnimate(true);
+	        animatedModel3.setLegendPosition("ne");
+	        animatedModel3.setLegendPlacement(LegendPlacement.OUTSIDEGRID);	        
+	        yAxis = animatedModel3.getAxis(AxisType.Y);
+	        yAxis.setMin(0);
+	        yAxis.setMax(30);
+	        
+	        animatedModel4 = initBarModel2();
+	        animatedModel4.setTitle("Sensores por fecha");
+	        animatedModel4.setAnimate(true);
+	        animatedModel4.setLegendPosition("ne");
+	        animatedModel4.setLegendPlacement(LegendPlacement.OUTSIDEGRID);	        
+	        yAxis = animatedModel4.getAxis(AxisType.Y);
+	        yAxis.setMin(0);
+	        yAxis.setMax(30);
+	    }
+
+	    private LineChartModel initLinearModel1() {
+	    	LineChartModel model = new LineChartModel();
+	        for (Medida meds : medidas.getmedidas()){
+		    	LineChartSeries nomSerie = new LineChartSeries();
+		    	nomSerie.setLabel(meds.getNombre());
+	        	for (Medicion m : meds.getMediciones()){
+	        		nomSerie.set(m.getId(), m.getValor());
+	        	}
+	        	model.addSeries(nomSerie);
+	        }
+	        	         
+	        return model;																																																																												
+	    } 
+	    
+	    private LineChartModel initLinearModel2() {
+	    	LineChartModel model = new LineChartModel();
+	    	 for (Medida meds : medidas.getmedidas()){
+		    	LineChartSeries nomSerie = new LineChartSeries();
+		    	nomSerie.setLabel(meds.getNombre());
+	        	for (Medicion m : meds.getMediciones()){
+	        		nomSerie.set(m.getId(), m.getValor());
+	        	}
+	        	model.addSeries(nomSerie);
+	        }
+	        	         
+	        return model;	
+	    }
+	    
+	    private BarChartModel initBarModel1() {
+	        BarChartModel model = new BarChartModel();
+	        for (Sensor sens : sensores.getsensores()){
+	        	ChartSeries nomSerie = new ChartSeries();
+		    	nomSerie.setLabel(sens.getNombre());
+	        	for (Medicion m : sens.getMediciones()){
+	        		nomSerie.set(format.format(m.getFecha()), m.getValor());
+	        	}
+	        	model.addSeries(nomSerie);
+	        }
+	        	         
+	        return model;	
+
+	    }
+	    
+	    private BarChartModel initBarModel2() {
+	        BarChartModel model = new BarChartModel();
+	        for (Sensor sens : sensores.getsensores()){
+	        	ChartSeries nomSerie = new ChartSeries();
+		    	nomSerie.setLabel(sens.getNombre());
+	        	for (Medicion m : sens.getMediciones()){
+	        		nomSerie.set(format.format(m.getFecha()), m.getValor());
+	        	}
+	        	model.addSeries(nomSerie);
+	        }
+	        	         
+	        return model;	
+	    }
+
+	    public void mostrarFecha(){
+	    	if(fechaMax == null || fechaMin == null){
+	    		fechaMax = new Date();
+	    		fechaMin =  new Date();
+	    	}
+	    	for (Medicion m : mediciones.getmediciones()){
+	    		if(m.getFecha().after(fechaMin) && m.getFecha().before(fechaMax)){
+	    			graficar = true;
+	    		}
+	    	}
+	    	if (!graficar){
+	    		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "No existen datos a graficar en esa fecha ", "");  
+		        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	    	}
+			
+	    	System.out.println("Fecha min: " + format.format(fechaMin) + "\n");
+	    	System.out.println("Fecha max: " + format.format(fechaMax) + "\n");
+	    	
+	    }
+
+
 }
