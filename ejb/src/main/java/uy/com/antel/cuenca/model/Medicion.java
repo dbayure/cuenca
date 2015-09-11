@@ -36,7 +36,9 @@ public class Medicion implements Serializable {
 	
 	private float valor;
 	
-	private Date fecha;
+	private Date fechaMedida;
+	
+	private Date fechaServer;
 
 	public Long getId() {
 		return id;
@@ -70,12 +72,20 @@ public class Medicion implements Serializable {
 		this.valor = valor;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaMedida() {
+		return fechaMedida;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaMedida(Date fechaMedida) {
+		this.fechaMedida = fechaMedida;
+	}
+
+	public Date getFechaServer() {
+		return fechaServer;
+	}
+
+	public void setFechaServer(Date fechaServer) {
+		this.fechaServer = fechaServer;
 	}
 
 	public static long getSerialversionuid() {
@@ -86,10 +96,11 @@ public class Medicion implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result
+				+ ((fechaMedida == null) ? 0 : fechaMedida.hashCode());
+		result = prime * result
+				+ ((fechaServer == null) ? 0 : fechaServer.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((medida == null) ? 0 : medida.hashCode());
-		result = prime * result + ((sensor == null) ? 0 : sensor.hashCode());
 		result = prime * result + Float.floatToIntBits(valor);
 		return result;
 	}
@@ -103,29 +114,25 @@ public class Medicion implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Medicion other = (Medicion) obj;
-		if (fecha == null) {
-			if (other.fecha != null)
+		if (fechaMedida == null) {
+			if (other.fechaMedida != null)
 				return false;
-		} else if (!fecha.equals(other.fecha))
+		} else if (!fechaMedida.equals(other.fechaMedida))
+			return false;
+		if (fechaServer == null) {
+			if (other.fechaServer != null)
+				return false;
+		} else if (!fechaServer.equals(other.fechaServer))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (medida == null) {
-			if (other.medida != null)
-				return false;
-		} else if (!medida.equals(other.medida))
-			return false;
-		if (sensor == null) {
-			if (other.sensor != null)
-				return false;
-		} else if (!sensor.equals(other.sensor))
-			return false;
 		if (Float.floatToIntBits(valor) != Float.floatToIntBits(other.valor))
 			return false;
 		return true;
 	}
-
+	
+		
 }

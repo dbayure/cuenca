@@ -29,7 +29,7 @@ import uy.com.antel.cuenca.model.Sensor;
 @ManagedBean
 @RequestScoped
 public class GraficaBean {
-		
+	
 		@Inject
 		private MedidaListProducer medidas;
 		
@@ -53,7 +53,10 @@ public class GraficaBean {
 	 
 	    @PostConstruct
 	    public void init() throws ParseException {
-	        createAnimatedModels();
+	    	fechaMin = new Date();
+	    	fechaMax = new Date();
+	    	graficarValores();
+	        
 	    }
 	 
 	    public LineChartModel getAnimatedModel1() {
@@ -168,7 +171,7 @@ public class GraficaBean {
 	        	ChartSeries nomSerie = new ChartSeries();
 		    	nomSerie.setLabel(sens.getNombre());
 	        	for (Medicion m : sens.getMediciones()){
-	        		nomSerie.set(format.format(m.getFecha()), m.getValor());
+	        		nomSerie.set(format.format(m.getFechaMedida()), m.getValor());
 	        	}
 	        	model.addSeries(nomSerie);
 	        }
@@ -183,27 +186,26 @@ public class GraficaBean {
 	        	ChartSeries nomSerie = new ChartSeries();
 		    	nomSerie.setLabel(sens.getNombre());
 	        	for (Medicion m : sens.getMediciones()){
-	        		nomSerie.set(format.format(m.getFecha()), m.getValor());
+	        		nomSerie.set(format.format(m.getFechaMedida()), m.getValor());
 	        	}
 	        	model.addSeries(nomSerie);
 	        }
-	        	         
 	        return model;	
 	    }
 
-	    public void mostrarFecha(){
-	    	if(fechaMax == null || fechaMin == null){
-	    		fechaMax = new Date();
-	    		fechaMin =  new Date();
-	    	}
+	    public void graficarValores() throws ParseException{
 	    	for (Medicion m : mediciones.getmediciones()){
-	    		if(m.getFecha().after(fechaMin) && m.getFecha().before(fechaMax)){
+    			System.out.println("fecha a medir " + m.getFechaMedida());
+	    		if(m.getFechaMedida().after(fechaMin) && m.getFechaMedida().before(fechaMax)){
 	    			graficar = true;
 	    		}
 	    	}
 	    	if (!graficar){
 	    		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "No existen datos a graficar en esa fecha ", "");  
 		        FacesContext.getCurrentInstance().addMessage(null, msg); 
+	    	}
+	    	else{
+	    		createAnimatedModels();
 	    	}
 			
 	    	System.out.println("Fecha min: " + format.format(fechaMin) + "\n");

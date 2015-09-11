@@ -16,8 +16,23 @@
 			</h:head>
 
 			<h:body>
-				<p:gmap center="-34.608873, -56.216843" zoom="13" type="HYBRID"
-					style="width:100%;height:400px" model="#{mapaBean.simpleModel}" />
+				<p:gmap center="-34.608873, -56.216843" zoom="13" type="HYBRID" style="width:100%;height:400px" model="#{mapaBean.mapa}">
+				<p:ajax event="overlaySelect" listener="#{mapaBean.onMarkerSelect}" />
+					<p:gmapInfoWindow id="infoWin">
+						<p:outputPanel style="text-align: center; display: block; margin: auto">
+		                    <h:graphicImage value="#{mapaBean.marcdor.data}" height="150" />
+		                    <br />
+		                    <p:commandLink action="#{mapaBean.graficas}">
+								<h:graphicImage value="#{mapaBean.marcdor.title}" alt="grafica" height="30px"/>
+							</p:commandLink>
+	            		</p:outputPanel>
+					</p:gmapInfoWindow>
+					
+			   </p:gmap>
+			   
+			       <p:outputPanel style="display:none">
+				        <p:graphicImage name="/resources/gfx/crs2.jpg" />
+    				</p:outputPanel>
 			</h:body>
 		</f:view>
 

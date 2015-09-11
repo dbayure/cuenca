@@ -34,8 +34,11 @@
 				<p:outputLabel for="valor" value="Valor:" />
 				<p:inputText id="valor" value="#{newMedicion.valor}" label="valor" required="true" />
 			
-				<p:outputLabel for="fecha" value="Fecha :" />
-      			<p:calendar id="fecha" value="#{newMedicion.fecha}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
+				<p:outputLabel for="fechaM" value="Fecha Medicion:" />
+      			<p:calendar id="fechaM" value="#{newMedicion.fechaMedida}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
+      			
+      			<p:outputLabel for="fechaS" value="Fecha Server:" />
+      			<p:calendar id="fechaS" value="#{newMedicion.fechaServer}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
 
 			</h:panelGrid>
 
@@ -92,7 +95,7 @@
 				</p:column>
 				
 				<p:column headerText="Fecha" style="width:35%">
-					<h:outputText value="#{_med.fecha}" pattern="dd/MM/yyyy HH:mm:ss"/>
+					<h:outputText value="#{_med.fechaMedida}" pattern="dd/MM/yyyy HH:mm:ss"/>
 				</p:column>
 				
 				<p:column style="width:3%">

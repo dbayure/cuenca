@@ -19,7 +19,7 @@
 			<p:outputLabel for="nombre" value="Nombre:" />
 			<p:inputText id="nombre" value="#{newZona.nombre}" label="nombre" required="true" />
 			
-			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:outputLabel for="desc" value="Descripción:" />
 			<p:inputText id="desc" value="#{newZona.descripcion}" label="descripcion" required="false" />
 			
 			<p:outputLabel for="nodos" value="Nodos:" />
@@ -57,7 +57,7 @@
                </p:cellEditor>  
            	 </p:column>  
            	 
-        	 <p:column headerText="Descripcion" style="width:25%">  
+        	 <p:column headerText="Descripción" style="width:25%">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_zona.descripcion}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_zona.descripcion}" style="width:96%" required="true"/></f:facet>  

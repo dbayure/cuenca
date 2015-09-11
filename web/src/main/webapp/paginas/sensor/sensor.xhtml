@@ -19,7 +19,7 @@
 			<p:outputLabel for="nombre" value="Nombre:" />
 			<p:inputText id="nombre" value="#{newSensor.nombre}" label="nombre" required="true" />
 			
-			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:outputLabel for="desc" value="Descripción:" />
 			<p:inputText id="desc" value="#{newSensor.descripcion}" label="descripcion" required="false" />
 
 			<p:outputLabel for="modelo" value="Modelo:" />
@@ -81,7 +81,7 @@
                </p:cellEditor>  
            	 </p:column>  
            	 
-        	 <p:column headerText="Descripcion" style="width:25%">  
+        	 <p:column headerText="Descripción" style="width:25%">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_sen.descripcion}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_sen.descripcion}" style="width:96%" required="true"/></f:facet>  
